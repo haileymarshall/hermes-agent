@@ -559,7 +559,8 @@ def calendar_delete(args):
 
 
 def drive_search(args):
-    query = args.query if args.raw_query else f"fullText contains '{args.query}'"
+    escaped = args.query.replace("\\", "\\\\").replace("'", "\\'")
+    query = args.query if args.raw_query else f"fullText contains '{escaped}'"
     if _gws_binary():
         results = _run_gws(
             ["drive", "files", "list"],
